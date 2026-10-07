@@ -1,0 +1,168 @@
+/* 全体 */
+.signage-container {
+  width: 100vw;
+  height: 100vh;
+  display: grid;
+  grid-template-rows: 8fr 2fr;
+  background: #000;
+  color: #fff;
+  font-family: "Noto Sans JP", sans-serif;
+  overflow: hidden;
+}
+
+/* 上部エリア */
+.signage-main {
+  display: flex;
+  flex-direction: column;
+  padding: 2vh 2vw;
+}
+
+.signage-header {
+  border-bottom: 0.3vh solid #00bcd4;
+  padding-bottom: 1vh;
+  margin-bottom: 2vh;
+}
+
+.signage-header h1 {
+  font-size: 3.5vh;
+  color: #00bcd4;
+  margin: 0;
+  letter-spacing: 0.3vw;
+}
+
+/* スライド */
+.signage-slide {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* スライド1：店舗PR */
+.slide-pr {
+  text-align: center;
+}
+
+.pr-text {
+  font-size: 6vh;
+  color: #00bcd4;
+  font-style: italic;
+}
+
+/* スライド2：本日のおすすめ産地 */
+.slide-pick {
+  text-align: center;
+}
+
+.slide-pick h2 {
+  font-size: 3vh;
+  color: #888;
+  margin-bottom: 2vh;
+}
+
+.pick-category {
+  font-size: 8vh;
+  color: #00bcd4;
+  font-weight: bold;
+  margin: 2vh 0;
+}
+
+.pick-message {
+  font-size: 3vh;
+  color: #fff;
+}
+
+/* スライド3：ワインリスト */
+.slide-wine-list {
+  width: 100%;
+  max-width: 90%;
+}
+
+.slide-wine-list h2 {
+  font-size: 3.5vh;
+  color: #00bcd4;
+  margin-bottom: 3vh;
+  border-left: 1vh solid #00bcd4;
+  padding-left: 2vw;
+}
+
+.slide-wine-list ul {
+  list-style: none;
+  padding: 0;
+}
+
+.slide-wine-list li {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 2vh 0;
+  border-bottom: 0.2vh solid #333;
+  font-size: 3vh;
+}
+
+.wine-name {
+  color: #fff;
+  font-weight: bold;
+}
+
+.wine-price {
+  color: #00bcd4;
+  font-size: 2.8vh;
+}
+
+/* スライド4：サービスグラスワイン */
+.slide-service {
+  text-align: center;
+}
+
+.slide-service h2 {
+  font-size: 3.5vh;
+  color: #888;
+  margin-bottom: 2vh;
+}
+
+.service-name {
+  font-size: 7vh;
+  color: #00bcd4;
+  font-weight: bold;
+  margin: 2vh 0;
+}
+
+.service-category {
+  font-size: 3vh;
+  color: #ccc;
+  margin-bottom: 3vh;
+}
+
+.service-price {
+  font-size: 3vh;
+}
+
+.service-price .normal {
+  text-decoration: line-through;
+  color: #888;
+  margin-right: 2vw;
+}
+
+.service-price .service {
+  color: #ff6b6b;
+  font-size: 5vh;
+  font-weight: bold;
+}
+
+/* 下部エリア */
+.signage-footer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #111;
+  border-top: 0.3vh solid #00bcd4;
+  padding: 2vh 4vw;
+}
+
+.signage-footer p {
+  font-size: 2.5vh;
+  color: #fff;
+  text-align: center;
+  margin: 0;
+}

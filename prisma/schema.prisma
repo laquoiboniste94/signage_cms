@@ -1,0 +1,114 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Get a free hosted Postgres database in seconds: `npx create-db`
+
+generator client {
+  provider = "prisma-client"
+  output   = "../app/generated/prisma"
+}
+
+datasource db {
+  provider = "sqlite"
+}
+
+model Wine {
+  id           String      @id @default(cuid())
+  name         String
+  category     String
+  type         String
+  origin       String
+  price        Int
+  imageUrl     String?
+  description  String?
+  capabilities Capability?
+  listings     WineStore[]
+  createdAt    DateTime    @default(now())
+  updatedAt    DateTime    @updatedAt
+}
+
+model Capability {
+  id       String  @id @default(cuid())
+  wineId   String  @unique
+  glass    Boolean @default(false)
+  bottle   Boolean @default(true)
+  tasting  Boolean @default(false)
+  pairing  Boolean @default(false)
+  wine     Wine    @relation(fields: [wineId], references: [id], onDelete: Cascade)
+}
+
+model Store {
+  id           String       @id @default(cuid())
+  code         String       @unique
+  name         String
+  city         String
+  concept      String?
+  departments  Department[]
+  wineStores   WineStore[]
+  users        User[]
+  createdAt    DateTime     @default(now())
+  updatedAt    DateTime     @updatedAt
+}
+
+model Department {
+  id        String   @id @default(cuid())
+  storeId   String
+  type      String
+  name      String
+  store     Store    @relation(fields: [storeId], references: [id], onDelete: Cascade)
+  slots     Slot[]
+  createdAt DateTime @default(now())
+
+  @@unique([storeId, type])
+}
+
+model WineStore {
+  id          String   @id @default(cuid())
+  wineId      String
+  storeId     String
+  retailPrice Int
+  role        String   @default("normal")
+  wine        Wine     @relation(fields: [wineId], references: [id], onDelete: Cascade)
+  store       Store    @relation(fields: [storeId], references: [id], onDelete: Cascade)
+  createdAt   DateTime @default(now())
+
+  @@unique([wineId, storeId])
+}
+
+model Slot {
+  id           String       @id @default(cuid())
+  departmentId String
+  slotCode     String
+  label        String
+  requires     String?
+  source       String
+  count        Int          @default(1)
+  staticText   String?
+  department   Department   @relation(fields: [departmentId], references: [id], onDelete: Cascade)
+  dailyItems   DailyListing[]
+
+  @@unique([departmentId, slotCode])
+}
+
+model DailyListing {
+  id         String   @id @default(cuid())
+  slotId     String
+  date       String
+  category   String
+  wineIds    String?
+  price      Int?
+  slot       Slot     @relation(fields: [slotId], references: [id], onDelete: Cascade)
+  createdAt  DateTime @default(now())
+
+  @@unique([slotId, date])
+}
+
+model User {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  password  String
+  role      String
+  storeId   String?
+  store     Store?   @relation(fields: [storeId], references: [id])
+  createdAt DateTime @default(now())
+}
