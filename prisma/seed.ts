@@ -114,6 +114,30 @@ const SLOTS = {
   ],
 };
 
+// ========================================
+// ユーザーデータ
+// ========================================
+const USERS = [
+  // 本部
+  { email: "admin", password: "admin", role: "admin" },
+  
+  // 京都店 支配人
+  { email: "kyoto-manager", password: "kyoto-manager", role: "manager", storeCode: "kyoto" },
+  
+  // 京都店 現場店長（3フロア）
+  { email: "kyoto-retail", password: "kyoto-retail", role: "floor", storeCode: "kyoto", departmentType: "retail" },
+  { email: "kyoto-bar", password: "kyoto-bar", role: "floor", storeCode: "kyoto", departmentType: "bar" },
+  { email: "kyoto-bistro", password: "kyoto-bistro", role: "floor", storeCode: "kyoto", departmentType: "bistro" },
+  
+  // 梅田店 支配人
+  { email: "umeda-manager", password: "umeda-manager", role: "manager", storeCode: "umeda" },
+  
+  // 梅田店 現場店長（3フロア）
+  { email: "umeda-retail", password: "umeda-retail", role: "floor", storeCode: "umeda", departmentType: "retail" },
+  { email: "umeda-bar", password: "umeda-bar", role: "floor", storeCode: "umeda", departmentType: "bar" },
+  { email: "umeda-bistro", password: "umeda-bistro", role: "floor", storeCode: "umeda", departmentType: "bistro" },
+];
+
 
 
 // ========================================
@@ -238,6 +262,25 @@ const SLOTS: Record<"retail" | "bar" | "bistro", SlotDef[]> = {
     }
   }
   console.log("Slot作成完了");
+
+  // ⑤ ユーザー作成
+for (const u of USERS) {
+  const store = u.storeCode ? stores[u.storeCode] : null;
+  const dept = u.departmentType && store
+    ? departments[`${u.storeCode}-${u.departmentType}`]
+    : null;
+
+  await prisma.user.create({
+    data: {
+      email: u.email,
+      password: u.password,
+      role: u.role,
+      storeId: store?.id,
+      departmentId: dept?.id,
+    },
+  });
+}
+console.log(`${USERS.length}人のユーザー作成`);
 
   console.log("シード完了");
 }

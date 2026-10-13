@@ -37,6 +37,16 @@ async function main() {
   slots.slice(0, 5).forEach((s) => 
     console.log(`  ${s.slotCode}: ${s.label} (source=${s.source})`)
   );
+
+  const users = await prisma.user.findMany({
+    include: { store: true, department: true },
+  });
+  console.log(`\nUser: ${users.length}件`);
+  users.forEach((u) => {
+    const storeName = u.store?.name || "-";
+    const deptName = u.department?.name || "-";
+    console.log(`  ${u.email} (${u.role}) | ${storeName} | ${deptName}`);
+  });
 }
 
 main()
