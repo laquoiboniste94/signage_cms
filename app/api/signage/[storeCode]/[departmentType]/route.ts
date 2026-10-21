@@ -2,9 +2,11 @@ import { NextResponse } from "next/server";
 import {
   fetchStoreWithDepartment,
   fetchStoreWines,
+  fetchDailyListing,  // ← 追加
 } from "@/lib/signage/fetchers";
 import { selectCategory } from "@/lib/signage/selectors";
 import { generateSlotContent } from "@/lib/signage/generators";
+import { today } from "@/lib/signage/helpers";  // ← 追加
 
 export async function GET(
   request: Request,
@@ -31,8 +33,26 @@ export async function GET(
     : "";
 
   // 【B】表示内容を生成
-  const slotsWithContent = slots.map((slot) =>
-    generateSlotContent(slot, { store, department, wines, category })
+   const slotsWithContent = await Promise.all(
+    slots.map(async (slot) => {
+      const daily = await fetchDailyListing(slot.id, today());
+      const dailyData = daily
+        ? {
+            category: daily.category,
+            wineIds: daily.wineIds ? JSON.parse(daily.wineIds) : [],
+            price: daily.price,
+            isAuto: daily.isAuto,
+          }
+        : null;
+
+      return generateSlotContent(slot, {
+        store,
+        department,
+        wines,
+        category,
+        daily: dailyData,
+      });
+    })
   );
 
   // プロモーション文

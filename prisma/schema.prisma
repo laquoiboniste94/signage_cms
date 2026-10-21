@@ -13,18 +13,21 @@ datasource db {
 }
 
 model Wine {
-  id           String      @id @default(cuid())
-  name         String
-  category     String
-  type         String
-  origin       String
-  price        Int
-  imageUrl     String?
-  description  String?
-  capabilities Capability?
-  listings     WineStore[]
-  createdAt    DateTime    @default(now())
-  updatedAt    DateTime    @updatedAt
+  id              String      @id @default(cuid())
+  name            String
+  category        String
+  type            String
+  origin          String
+  price           Int
+  imageUrl        String?
+  description     String?
+  grapeVarieties  String?     // JSON: ["シラー", "グルナッシュ"]
+  aromas          String?     // JSON: ["チェリー", "プラム"]
+  tasteLevel      Int?        // 1-5
+  capabilities    Capability?
+  listings        WineStore[]
+  createdAt       DateTime    @default(now())
+  updatedAt       DateTime    @updatedAt
 }
 
 model Capability {
@@ -107,9 +110,10 @@ model DailyListing {
   id         String   @id @default(cuid())
   slotId     String
   date       String
-  category   String
+  category   String?
   wineIds    String?
   price      Int?
+  isAuto     Boolean  @default(true)
   slot       Slot     @relation(fields: [slotId], references: [id], onDelete: Cascade)
   createdAt  DateTime @default(now())
 

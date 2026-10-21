@@ -47,6 +47,11 @@ async function main() {
     const deptName = u.department?.name || "-";
     console.log(`  ${u.email} (${u.role}) | ${storeName} | ${deptName}`);
   });
+
+  const wine = await prisma.wine.findFirst({
+    where: { name: "ペトリュス" },
+  });
+  console.log(wine);
 }
 
 main()

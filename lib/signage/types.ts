@@ -10,6 +10,9 @@ export type WineWithCapability = {
   price: number;
   imageUrl: string | null;
   description: string | null;
+  grapeVarieties: string | null;
+  aromas: string | null;
+  tasteLevel: number | null;
   capabilities: {
     glass: boolean;
     bottle: boolean;
@@ -49,11 +52,39 @@ export type SlotContext = {
   department: DepartmentData;
   wines: WineWithCapability[];
   category: string;
+  daily: {
+    category: string | null;
+    wineIds: string[];
+    price: number | null;
+    isAuto: boolean;
+  } | null;
 };
 
 // ========================================
-// 表示枠の型（union）
+// API レスポンス用
 // ========================================
+export type WineResponse = {
+  name: string;
+  category: string;
+  type: string;
+  origin?: string;
+  description?: string;
+  grapeVarieties?: string[];
+  aromas?: string[];
+  tasteLevel?: number | null;
+  price?: number;
+  normalPrice?: number;
+  servicePrice?: number;
+};
+
+export type WineListItemResponse = {
+  name: string;
+  bottlePrice: number;
+  glassPrice?: number;
+  type: string;
+  description?: string;
+};
+
 export type SlotResponse =
   | { slotCode: "pr"; label: string; type: "static"; content: string }
   | { slotCode: "promotion"; label: string; type: "static"; content: string }
@@ -68,47 +99,25 @@ export type SlotResponse =
       slotCode: "pick-wine";
       label: string;
       type: "wine";
-      wine: {
-        name: string;
-        category: string;
-        type: string;
-        price: number;
-        description: string;
-      } | null;
+      wine: WineResponse | null;
     }
   | {
       slotCode: "free-tasting";
       label: string;
       type: "wine";
-      wine: {
-        name: string;
-        category: string;
-        type: string;
-        description: string;
-      } | null;
+      wine: WineResponse | null;
     }
   | {
       slotCode: "service-glass";
       label: string;
       type: "wine";
-      wine: {
-        name: string;
-        category: string;
-        type: string;
-        normalPrice: number;
-        servicePrice: number;
-      } | null;
+      wine: WineResponse | null;
     }
   | {
       slotCode: "wine-list";
       label: string;
       type: "wine-list";
-      wines: {
-        name: string;
-        bottlePrice: number;
-        glassPrice: number;
-        type: string;
-      }[];
+      wines: WineListItemResponse[];
     }
   | {
       slotCode: "apero";
@@ -119,9 +128,6 @@ export type SlotResponse =
       wines: { name: string }[];
     };
 
-// ========================================
-// APIレスポンス全体
-// ========================================
 export type SignageResponse = {
   store: {
     id: string;

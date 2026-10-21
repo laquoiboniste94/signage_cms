@@ -28,20 +28,35 @@ function formatWine(wine: WineWithCapability, departmentType: string) {
     name: wine.name,
     category: wine.category,
     type: wine.type,
+    origin: wine.origin,
     price: bottlePrice,
     description: wine.description || "",
+    grapeVarieties: wine.grapeVarieties ? JSON.parse(wine.grapeVarieties) : [],
+    aromas: wine.aromas ? JSON.parse(wine.aromas) : [],
+    tasteLevel: wine.tasteLevel || null,
   };
 }
 
 function formatWineListItem(wine: WineWithCapability, departmentType: string) {
   const bottlePrice = calcBottlePrice(wine.price, departmentType);
-  return {
+  const base = {
     name: wine.name,
     bottlePrice,
-    glassPrice: Math.round(bottlePrice / 10),
     type: wine.type,
+    description: wine.description || "",
+  };
+
+  // 小売はグラス提供なし
+  if (departmentType === "retail") {
+    return base;
+  }
+
+  return {
+    ...base,
+    glassPrice: Math.round(bottlePrice / 10),
   };
 }
+
 
 function formatServiceGlass(wine: WineWithCapability, departmentType: string) {
   const bottlePrice = calcBottlePrice(wine.price, departmentType);
@@ -51,6 +66,11 @@ function formatServiceGlass(wine: WineWithCapability, departmentType: string) {
     name: wine.name,
     category: wine.category,
     type: wine.type,
+    origin: wine.origin,
+    description: wine.description || "",
+    grapeVarieties: wine.grapeVarieties ? JSON.parse(wine.grapeVarieties) : [],
+    aromas: wine.aromas ? JSON.parse(wine.aromas) : [],
+    tasteLevel: wine.tasteLevel || null,
     normalPrice,
     servicePrice,
   };
@@ -63,7 +83,7 @@ export function generateSlotContent(
   slot: SlotData,
   context: SlotContext
 ) {
-  const { store, department, wines, category } = context;
+  const { store, department, wines, category, daily } = context;
 
   switch (slot.slotCode) {
     // 店舗PR
@@ -110,6 +130,19 @@ export function generateSlotContent(
 
     // 本日の無料試飲
     case "free-tasting": {
+      // DailyListing があれば、それを使う
+      if (daily?.wineIds && daily.wineIds.length > 0) {
+        const selected = wines.find((w) => daily.wineIds.includes(w.id));
+        if (selected) {
+          return {
+            slotCode: slot.slotCode,
+            label: slot.label,
+            type: "wine",
+            wine: formatWine(selected, department.type),
+          };
+        }
+      }
+      // 未設定 → ランダム
       const tastingWines = wines.filter((w) => w.capabilities?.tasting);
       const wine = pickRandom(tastingWines);
       return {
@@ -122,6 +155,19 @@ export function generateSlotContent(
 
     // 本日のサービスグラスワイン
     case "service-glass": {
+      // DailyListing があれば、それを使う
+      if (daily?.wineIds && daily.wineIds.length > 0) {
+        const selected = wines.find((w) => daily.wineIds.includes(w.id));
+        if (selected) {
+          return {
+            slotCode: slot.slotCode,
+            label: slot.label,
+            type: "wine",
+            wine: formatServiceGlass(selected, department.type),
+          };
+        }
+      }
+      // 未設定 → ランダム
       const glassWines = wines.filter((w) => w.capabilities?.glass);
       const wine = pickRandom(glassWines);
       return {
@@ -134,6 +180,21 @@ export function generateSlotContent(
 
     // 本日のアペロ
     case "apero": {
+      // DailyListing があれば、それを使う
+      if (daily?.wineIds && daily.wineIds.length > 0) {
+        const selected = wines.filter((w) => daily.wineIds.includes(w.id));
+        if (selected.length > 0) {
+          return {
+            slotCode: slot.slotCode,
+            label: slot.label,
+            type: "apero",
+            price: daily.price || calcAperoPrice(selected, store.code),
+            regularPrice: calcRegularPrice(selected, store.code),
+            wines: selected.map((w) => ({ name: w.name })),
+          };
+        }
+      }
+      // 未設定 → ランダム
       const pairingWines = wines.filter((w) => w.capabilities?.pairing);
       const aperoWines = pickRandomN(pairingWines, 3);
       return {

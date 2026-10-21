@@ -70,82 +70,130 @@ export default function SignagePage() {
 
           {/* スライド3-A：ワインリスト */}
           {currentSlot.slotCode === "wine-list" && "wines" in currentSlot && (
-            <div className="slide-wine-list">
-              <h2>{currentSlot.label}</h2>
-              <ul>
-                {currentSlot.wines.map((w, i) => (
-                  <li key={i}>
-                    <span className="wine-name">{w.name}</span>
-                    <span className="wine-price">
-                      ¥{w.bottlePrice.toLocaleString()} / グラス¥
-                      {w.glassPrice.toLocaleString()}
-                    </span>
-                  </li>
-                ))}
-              </ul>
-            </div>
+  <div className="slide-wine-list">
+    <h2>{currentSlot.label}</h2>
+    <ul>
+      {currentSlot.wines.map((w, i) => (
+        <li key={i}>
+          <div className="wine-item-header">
+            <span className="wine-name">{w.name}</span>
+            <span className="wine-price">
+                ¥{w.bottlePrice.toLocaleString()}
+                  {w.glassPrice !== undefined && (
+        <> / グラス¥{w.glassPrice.toLocaleString()}</>
           )}
+      </span>
+          </div>
+          {w.description && (
+            <span className="wine-desc">{w.description}</span>
+          )}
+        </li>
+      ))}
+    </ul>
+  </div>
+)}
 
           {/* スライド3-B：一押しワイン */}
           {currentSlot.slotCode === "pick-wine" && (
-            <div className="slide-pick-wine">
-              <h2>{currentSlot.label}</h2>
-              <p className="pick-wine-name">{currentSlot.wine?.name}</p>
-              <p className="pick-wine-category">{currentSlot.wine?.category}</p>
-              <p className="pick-wine-price">
-                ¥{currentSlot.wine?.price?.toLocaleString()}
-              </p>
-              <p className="pick-wine-desc">{currentSlot.wine?.description}</p>
-            </div>
-          )}
+  <div className="slide-wine-list">
+    <h2>{currentSlot.label}</h2>
+    <ul>
+      {currentSlot.wines?.map((w: any, i: number) => (
+        <li key={i}>
+          <span className="wine-name">{w.name}</span>
+          <span className="wine-desc">{w.description}</span>
+        </li>
+      ))}
+    </ul>
+  </div>
+)}
 
           {/* スライド4-A：無料試飲 */}
-          {currentSlot.slotCode === "free-tasting" && (
-            <div className="slide-wine">
-              <h2>{currentSlot.label}</h2>
-              <p className="wine-name">{currentSlot.wine?.name}</p>
-              <p className="wine-category">{currentSlot.wine?.category}</p>
-              <p className="wine-desc">{currentSlot.wine?.description}</p>
-            </div>
-          )}
+         {currentSlot.slotCode === "free-tasting" && (
+  <div className="slide-wine-detail">
+    <h2>{currentSlot.label}</h2>
+    <p className="wine-name">{currentSlot.wine?.name}</p>
+    <p className="wine-meta">
+      {currentSlot.wine?.origin} / {currentSlot.wine?.type}
+      {currentSlot.wine?.grapeVarieties?.length > 0 && (
+        <> / {currentSlot.wine.grapeVarieties.join("・")}</>
+      )}
+    </p>
+    <p className="wine-desc">{currentSlot.wine?.description}</p>
+
+    {currentSlot.wine?.aromas?.length > 0 && (
+      <p className="wine-aromas">
+        アロマ: {currentSlot.wine.aromas.join(" / ")}
+      </p>
+    )}
+
+    {currentSlot.wine?.tasteLevel && (
+      <TasteBar
+        level={currentSlot.wine.tasteLevel}
+        type={currentSlot.wine.type}
+      />
+    )}
+  </div>
+)}
 
           {/* スライド4-A：サービスグラス */}
           {currentSlot.slotCode === "service-glass" && (
-            <div className="slide-service">
-              <h2>{currentSlot.label}</h2>
-              <p className="service-name">{currentSlot.wine?.name}</p>
-              <p className="service-category">{currentSlot.wine?.category}</p>
-              <p className="service-price">
-                <span className="normal">
-                  通常 ¥{currentSlot.wine?.normalPrice?.toLocaleString()}
-                </span>
-                <span className="service">
-                  本日 ¥{currentSlot.wine?.servicePrice?.toLocaleString()}
-                </span>
-              </p>
-            </div>
-          )}
+  <div className="slide-wine-detail">
+    <h2>{currentSlot.label}</h2>
+    <p className="wine-name">{currentSlot.wine?.name}</p>
+    <p className="wine-meta">
+      {currentSlot.wine?.origin} / {currentSlot.wine?.type}
+      {currentSlot.wine?.grapeVarieties?.length > 0 && (
+        <> / {currentSlot.wine.grapeVarieties.join("・")}</>
+      )}
+    </p>
+    <p className="wine-desc">{currentSlot.wine?.description}</p>
+
+    {currentSlot.wine?.aromas?.length > 0 && (
+      <p className="wine-aromas">
+        アロマ: {currentSlot.wine.aromas.join(" / ")}
+      </p>
+    )}
+
+    {currentSlot.wine?.tasteLevel && (
+      <TasteBar
+        level={currentSlot.wine.tasteLevel}
+        type={currentSlot.wine.type}
+      />
+    )}
+
+    <p className="service-price">
+      <span className="normal">
+        通常 ¥{currentSlot.wine?.normalPrice?.toLocaleString()}
+      </span>
+      <span className="service">
+        本日 ¥{currentSlot.wine?.servicePrice?.toLocaleString()}
+      </span>
+    </p>
+  </div>
+)}
 
           {/* スライド4-B：アペロ */}
           {currentSlot.slotCode === "apero" && "wines" in currentSlot && (
-            <div className="slide-apero">
-              <h2>{currentSlot.label}</h2>
-              <p className="apero-price">
-                <span className="regular">
-                  通常 ¥{currentSlot.regularPrice.toLocaleString()}
-                </span>
-                <span className="special">
-                  本日 ¥{currentSlot.price.toLocaleString()}
-                </span>
-              </p>
-              <p className="apero-desc">ワイン3杯 + 小皿3品</p>
-              <ul className="apero-wines">
-                {currentSlot.wines.map((w, i) => (
-                  <li key={i}>・{w.name}</li>
-                ))}
-              </ul>
-            </div>
-          )}
+  <div className="slide-apero">
+    <h2>{currentSlot.label}</h2>
+    <p className="apero-price">
+      <span className="regular">
+        通常 ¥{currentSlot.regularPrice.toLocaleString()}
+      </span>
+      <span className="special">
+        本日 ¥{currentSlot.price.toLocaleString()}
+      </span>
+    </p>
+    <p className="apero-desc">ワイン3杯 + 小皿3品</p>
+    <ul className="apero-wines">
+      {currentSlot.wines.map((w: any, i: number) => (
+        <li key={i}>・{w.name}</li>
+      ))}
+    </ul>
+  </div>
+)}
+
         </div>
       </div>
 
@@ -153,6 +201,27 @@ export default function SignagePage() {
       <footer className="signage-footer">
         <p>{data.promotion.content}</p>
       </footer>
+    </div>
+  );
+}
+
+  // ========================================
+// 味わいバー
+// ========================================
+function TasteBar({ level, type }: { level: number; type: string }) {
+  const labelLeft = type === "赤" ? "上品" : "淡麗";
+  const labelRight = type === "赤" ? "重厚" : "芳醇";
+
+  return (
+    <div className="taste-bar">
+      <span className="taste-label">{labelLeft}</span>
+      <div className="taste-track">
+        <div
+          className="taste-fill"
+          style={{ width: `${(level / 5) * 100}%` }}
+        />
+      </div>
+      <span className="taste-label">{labelRight}</span>
     </div>
   );
 }

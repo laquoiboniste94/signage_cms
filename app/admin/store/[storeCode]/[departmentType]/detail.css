@@ -1,0 +1,255 @@
+.detail-container {
+  min-height: 100vh;
+  background: #f5f5f5;
+  font-family: "Noto Sans JP", sans-serif;
+}
+
+.detail-loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  font-size: 2.5vh;
+  color: #888;
+}
+
+.detail-header {
+  background: #00bcd4;
+  color: #fff;
+  padding: 2vh 3vw;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.detail-header h1 {
+  margin: 0;
+  font-size: 2.5vh;
+}
+
+.detail-actions button {
+  margin-left: 1vw;
+  padding: 1vh 2vw;
+  font-size: 1.8vh;
+  background: rgba(255, 255, 255, 0.2);
+  color: #fff;
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  border-radius: 0.5vh;
+  cursor: pointer;
+}
+
+.detail-actions button:hover {
+  background: rgba(255, 255, 255, 0.3);
+}
+
+.detail-main {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 3vh 2vw;
+}
+
+.slot-card {
+  background: #fff;
+  border-radius: 1vh;
+  padding: 3vh 3vw;
+  margin-bottom: 2.5vh;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+.slot-card h2 {
+  margin: 0 0 2vh 0;
+  font-size: 2.2vh;
+  color: #00bcd4;
+  border-bottom: 0.3vh solid #00bcd4;
+  padding-bottom: 1vh;
+}
+
+.editor {
+  display: flex;
+  gap: 1vw;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.editor select {
+  flex: 1;
+  min-width: 200px;
+  padding: 1.5vh;
+  font-size: 2vh;
+  border: 1px solid #ddd;
+  border-radius: 0.5vh;
+  font-family: inherit;
+}
+
+.editor button,
+.wine-selector > button {
+  padding: 1.5vh 3vw;
+  font-size: 2vh;
+  background: #00bcd4;
+  color: #fff;
+  border: none;
+  border-radius: 0.5vh;
+  cursor: pointer;
+  font-family: inherit;
+  font-weight: bold;
+}
+
+.editor button:hover,
+.wine-selector > button:hover {
+  background: #0097a7;
+}
+
+.editor button:disabled,
+.wine-selector > button:disabled {
+  background: #ccc;
+  cursor: not-allowed;
+}
+
+.slot-value {
+  font-size: 2vh;
+  color: #333;
+  margin: 0;
+}
+
+.slot-static {
+  font-size: 2vh;
+  color: #666;
+  margin: 0;
+  font-style: italic;
+}
+
+/* ワイン選択 */
+.mode-tabs {
+  display: flex;
+  gap: 1vw;
+  margin-bottom: 2vh;
+}
+
+.mode-tabs button {
+  flex: 1;
+  padding: 1.5vh;
+  font-size: 1.8vh;
+  background: #eee;
+  color: #333;
+  border: none;
+  border-radius: 0.5vh;
+  cursor: pointer;
+  font-family: inherit;
+}
+
+.mode-tabs button.active {
+  background: #00bcd4;
+  color: #fff;
+  font-weight: bold;
+}
+
+.wine-list {
+  list-style: none;
+  padding: 0;
+  margin: 2vh 0;
+  max-height: 400px;
+  overflow-y: auto;
+}
+
+.wine-list li {
+  padding: 1.2vh 0;
+  font-size: 2vh;
+  border-bottom: 1px solid #eee;
+}
+
+.wine-list label {
+  display: flex;
+  align-items: center;
+  gap: 1vw;
+  cursor: pointer;
+}
+
+.wine-list input[type="checkbox"] {
+  width: 2vh;
+  height: 2vh;
+  cursor: pointer;
+}
+
+.auto-message {
+  font-size: 2vh;
+  color: #666;
+  padding: 2vh;
+  background: #f9f9f9;
+  border-radius: 0.5vh;
+  margin: 2vh 0;
+}
+
+.wine-list-view {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.wine-list-view li {
+  padding: 1.2vh 0;
+  font-size: 2vh;
+  border-bottom: 1px solid #eee;
+}
+
+.category-select {
+  display: flex;
+  align-items: center;
+  gap: 1vw;
+  margin: 2vh 0;
+}
+
+.category-select label {
+  font-size: 1.8vh;
+  color: #666;
+}
+
+.category-select select {
+  flex: 1;
+  padding: 1.5vh;
+  font-size: 2vh;
+  border: 1px solid #ddd;
+  border-radius: 0.5vh;
+}
+
+.select-hint {
+  font-size: 1.8vh;
+  color: #999;
+  margin: 2vh 0;
+  font-style: italic;
+}
+
+.selected-info {
+  font-size: 1.8vh;
+  color: #00bcd4;
+  margin: 2vh 0;
+  font-weight: bold;
+}
+
+.wine-list input[type="checkbox"]:disabled + * {
+  opacity: 0.5;
+}
+.action-buttons {
+  display: flex;
+  gap: 1vw;
+  margin-top: 2vh;
+}
+
+.action-buttons button {
+  flex: 1;
+}
+
+.clear-button {
+  background: #fff !important;
+  color: #ff6b6b !important;
+  border: 2px solid #ff6b6b !important;
+}
+
+.clear-button:hover:not(:disabled) {
+  background: #ff6b6b !important;
+  color: #fff !important;
+}
+
+.clear-button:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}

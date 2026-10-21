@@ -166,3 +166,91 @@
   text-align: center;
   margin: 0;
 }
+
+/* 1本表示（詳細） */
+.slide-wine-detail {
+  text-align: center;
+  max-width: 80%;
+}
+
+.slide-wine-detail h2 {
+  font-size: 3vh;
+  color: #888;
+  margin-bottom: 2vh;
+}
+
+.slide-wine-detail .wine-name {
+  font-size: 7vh;
+  color: #00bcd4;
+  font-weight: bold;
+  margin: 2vh 0;
+}
+
+.slide-wine-detail .wine-meta {
+  font-size: 2.5vh;
+  color: #ccc;
+  margin: 1vh 0;
+}
+
+.slide-wine-detail .wine-desc {
+  font-size: 2.5vh;
+  color: #fff;
+  line-height: 1.6;
+  margin: 2vh 0;
+}
+
+.slide-wine-detail .wine-aromas {
+  font-size: 2vh;
+  color: #aaa;
+  margin: 1vh 0;
+}
+
+.slide-wine-detail .service-price {
+  margin-top: 2vh;
+  font-size: 2.5vh;
+}
+
+.slide-wine-detail .service-price .normal {
+  text-decoration: line-through;
+  color: #888;
+  margin-right: 2vw;
+}
+
+.slide-wine-detail .service-price .service {
+  color: #ff6b6b;
+  font-size: 4vh;
+  font-weight: bold;
+}
+
+/* 味わいバー */
+.taste-bar {
+  display: flex;
+  align-items: center;
+  gap: 1vw;
+  margin: 2vh 0;
+  justify-content: center;
+  width: 100%;
+}
+
+.taste-label {
+  font-size: 1.8vh;
+  color: #888;
+  min-width: 4vw;
+  text-align: center;
+}
+
+.taste-track {
+  flex: 1;
+  max-width: 40vw;
+  height: 1.5vh;
+  background: #eee;
+  border-radius: 1vh;
+  overflow: hidden;
+}
+
+.taste-fill {
+  height: 100%;
+  background: linear-gradient(to right, #00bcd4, #ff6b6b);
+  border-radius: 1vh;
+  transition: width 0.3s;
+}
