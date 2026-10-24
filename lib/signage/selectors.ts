@@ -13,7 +13,7 @@ export async function selectCategory(
 ): Promise<string> {
   const daily = await fetchDailyListing(slotId, date);
   if (daily) {
-    return daily.category;
+    return daily.category  || "";
   }
   // 過去ログがなければランダム
   const categories = STORE_CATEGORIES[storeCode] || [];

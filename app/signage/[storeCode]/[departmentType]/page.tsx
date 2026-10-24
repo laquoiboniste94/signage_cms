@@ -79,9 +79,9 @@ export default function SignagePage() {
             <span className="wine-name">{w.name}</span>
             <span className="wine-price">
                 ¥{w.bottlePrice.toLocaleString()}
-                  {w.glassPrice !== undefined && (
-        <> / グラス¥{w.glassPrice.toLocaleString()}</>
-          )}
+                  {w.glassPrice != null && (
+                    <> / グラス¥{w.glassPrice.toLocaleString()}</>
+                  )}
       </span>
           </div>
           {w.description && (
