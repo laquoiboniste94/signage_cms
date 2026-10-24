@@ -37,12 +37,7 @@ export default function LoginPage() {
       const data = await res.json();
       // LocalStorage に保存
       localStorage.setItem("signage_user", JSON.stringify(data.user));
-      // 権限に応じてリダイレクト
-      if (data.user.role === "admin") {
-        router.push("/admin/wines");
-      } else {
-        router.push("/admin/dashboard");
-      }
+      router.push("/admin/dashboard");
     } else {
       setError("ログイン失敗");
     }

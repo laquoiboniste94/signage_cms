@@ -42,3 +42,31 @@ export function canViewWines(
   // 現場店長は不可
   return false;
 }
+
+// ========================================
+// ページアクセス権限
+// ========================================
+export function canAccessStorePage(
+  user: User,
+  storeCode: string,
+  departmentType: string
+): boolean {
+  // 本部は全ページOK
+  if (user.role === "admin") return true;
+
+  // 支配人は自店舗のみ
+  if (user.role === "manager" && user.store?.code === storeCode) {
+    return true;
+  }
+
+  // 現場店長は自分のフロアのみ
+  if (
+    user.role === "floor" &&
+    user.store?.code === storeCode &&
+    user.department?.type === departmentType
+  ) {
+    return true;
+  }
+
+  return false;
+}

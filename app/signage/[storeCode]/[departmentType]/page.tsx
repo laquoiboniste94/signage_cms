@@ -93,18 +93,31 @@ export default function SignagePage() {
   </div>
 )}
 
-          {/* スライド3-B：一押しワイン */}
-          {currentSlot.slotCode === "pick-wine" && (
-  <div className="slide-wine-list">
+  {/* スライド3-B：一押しワイン */}
+{currentSlot.slotCode === "pick-wine" && (
+  <div className="slide-wine-detail">
     <h2>{currentSlot.label}</h2>
-    <ul>
-      {currentSlot.wines?.map((w: any, i: number) => (
-        <li key={i}>
-          <span className="wine-name">{w.name}</span>
-          <span className="wine-desc">{w.description}</span>
-        </li>
-      ))}
-    </ul>
+    <p className="wine-name">{currentSlot.wine?.name}</p>
+    <p className="wine-meta">
+      {currentSlot.wine?.origin} / {currentSlot.wine?.type}
+      {currentSlot.wine?.grapeVarieties?.length ? (
+        <> / {currentSlot.wine.grapeVarieties.join("・")}</>
+      ) : null}
+    </p>
+    <p className="wine-desc">{currentSlot.wine?.description}</p>
+
+    {currentSlot.wine?.aromas?.length ? (
+      <p className="wine-aromas">
+        アロマ: {currentSlot.wine.aromas.join(" / ")}
+      </p>
+    ) : null}
+
+    {currentSlot.wine?.tasteLevel && (
+      <TasteBar
+        level={currentSlot.wine.tasteLevel}
+        type={currentSlot.wine.type}
+      />
+    )}
   </div>
 )}
 
@@ -115,13 +128,13 @@ export default function SignagePage() {
     <p className="wine-name">{currentSlot.wine?.name}</p>
     <p className="wine-meta">
       {currentSlot.wine?.origin} / {currentSlot.wine?.type}
-      {currentSlot.wine?.grapeVarieties?.length > 0 && (
-        <> / {currentSlot.wine.grapeVarieties.join("・")}</>
-      )}
+      {currentSlot.wine?.grapeVarieties && currentSlot.wine.grapeVarieties.length > 0 && (
+  <> / {currentSlot.wine.grapeVarieties.join("・")}</>
+)}
     </p>
     <p className="wine-desc">{currentSlot.wine?.description}</p>
 
-    {currentSlot.wine?.aromas?.length > 0 && (
+    {currentSlot.wine?.aromas && currentSlot.wine.aromas.length > 0 && (
       <p className="wine-aromas">
         アロマ: {currentSlot.wine.aromas.join(" / ")}
       </p>
@@ -143,13 +156,13 @@ export default function SignagePage() {
     <p className="wine-name">{currentSlot.wine?.name}</p>
     <p className="wine-meta">
       {currentSlot.wine?.origin} / {currentSlot.wine?.type}
-      {currentSlot.wine?.grapeVarieties?.length > 0 && (
-        <> / {currentSlot.wine.grapeVarieties.join("・")}</>
-      )}
+            {currentSlot.wine?.grapeVarieties && currentSlot.wine.grapeVarieties.length > 0 && (
+  <> / {currentSlot.wine.grapeVarieties.join("・")}</>
+)}
     </p>
     <p className="wine-desc">{currentSlot.wine?.description}</p>
 
-    {currentSlot.wine?.aromas?.length > 0 && (
+    {currentSlot.wine?.aromas && currentSlot.wine.aromas.length > 0 && (
       <p className="wine-aromas">
         アロマ: {currentSlot.wine.aromas.join(" / ")}
       </p>
@@ -187,7 +200,7 @@ export default function SignagePage() {
     </p>
     <p className="apero-desc">ワイン3杯 + 小皿3品</p>
     <ul className="apero-wines">
-      {currentSlot.wines.map((w: any, i: number) => (
+      {currentSlot.wines.map((w, i: number) => (
         <li key={i}>・{w.name}</li>
       ))}
     </ul>

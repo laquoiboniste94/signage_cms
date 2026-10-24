@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import { useParams, useRouter } from "next/navigation";
 import { User, SlotWithDaily } from "@/lib/admin/types";
 import { canEditTodayPick, canEditWineSelection,
-          canViewWines,
+          canViewWines, canAccessStorePage,
         } from "@/lib/admin/permissions";
 import TodayPickEditor from "./components/TodayPickEditor";
 import WineSelector from "./components/WineSelector";
@@ -55,8 +55,14 @@ useEffect(() => {
   // ログインしていない場合のリダイレクト
   if (user === null) {
     router.push("/admin/login");
+    return;
   }
-}, [user, router]);
+   // 権限チェック
+  if (!canAccessStorePage(user, storeCode, departmentType)) {
+    router.push("/admin/dashboard");
+    return;
+  }
+}, [user, storeCode, departmentType, router]);
 
   // データ取得
   useEffect(() => {
